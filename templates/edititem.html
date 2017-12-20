@@ -1,0 +1,42 @@
+<html>
+<head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+<body>
+<div class="container">
+<h1>Edit Skill</h1>
+
+<div class = 'pane'>
+<form action="{{ url_for('editItem', item_id =editedItem.id)}}" method = 'post'>
+
+<dl>
+	<dt>Name:</dt>
+		<dd><input type ='text' size='30' name='name' value="{{editedItem.name}}" required></dd>
+            <dt>Description:</dt>
+                        <dd><textarea name = 'description' rows='5' cols='40' required>{{editedItem.description}}</textarea></dd>
+            <dt>Category:</dt>
+                        <dd>
+                              <select name='category_id' value='{{editedItem.category_id}}'>
+                                    {% for c in categories %}
+                                    <option value='{{c.id}}'>{{c.name}}</option>
+                                    {% endfor %}
+                              </select>
+                        </dd>
+
+</dl>
+
+
+<input type='submit'>
+
+</form>
+</div>
+</div>
+
+</body>
+
+
+
+
+</html>

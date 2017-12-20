@@ -1,0 +1,22 @@
+body {
+	background: #d3d3d3
+}
+.main-title{
+	text-align: center;
+	text-decoration: none;
+	color: #222;
+}
+.name{
+	font-size: large;
+}
+hr{
+	border: 1px solid black;
+}
+.box {
+	border: 2px solid black;
+	padding: 2%;
+}
+
+.pin-right{
+	float: right;
+}
