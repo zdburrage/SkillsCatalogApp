@@ -18,17 +18,23 @@
                         <dd><textarea name = 'description' rows='5' cols='40' required>{{editedItem.description}}</textarea></dd>
             <dt>Category:</dt>
                         <dd>
-                              <select name='category_id' value='{{editedItem.category_id}}'>
+                              <select name='category_id' value="{{editedItem.category_id}}">
                                     {% for c in categories %}
+                                          {% if c.id == editedItem.category_id %}
+                                     <option selected="selected" value='{{c.id}}'>{{c.name}}</option>
+                                          {% else %}
                                     <option value='{{c.id}}'>{{c.name}}</option>
+                                          {% endif %}
                                     {% endfor %}
                               </select>
                         </dd>
 
 </dl>
 
-
+<div>
 <input type='submit'>
+<button href="{{url_for('editItem', item_id=editedItem.id)}}">Cancel</button>
+</div>
 
 </form>
 </div>

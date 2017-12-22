@@ -7,25 +7,28 @@
 
 	
 	<body>
+			<div class="container">
+		<div class="row">
+			<div class="pin-right"><a class="big-link login" href="/login">Login </a><a class="big-link" href="/logout"> Logout</a></div>
+			
+		</div>
+	</div>	
 	<div class = 'pane'>
 		<div class = 'header'>
 		<a class = 'main-title' href="{{ url_for('displayCategories') }}"><h1 >Technical Job/Skills Catalog</h1></a>
 	</div>
-	<div class="container">
-		<div class="row">
-			
-		</div>
-	</div>	
 
-<div class = 'flash'>
+<div class = 'container'>
 		      {% with messages = get_flashed_messages() %}
       {% if messages %}
           
-        <ul>
+        
         {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
+        <div class="row">
+           <strong>{{ message }} </strong>
+       </div>
         {% endfor %}
-        </ul>
+        
         {% endif %}
     {% endwith %}
 
@@ -52,7 +55,8 @@
 </div>
 <div class ="container">
 	<div class="row">
-<div class = "col-md-12 pin-right"><a href="{{ url_for('newItem')}}">Add New Skill</a></div>
+<div class = "pin-right big-link"><a href="{{ url_for('newItem')}}">Add New Skill</a></div>
+<div class = "pin-right big-link"><a href="{{ url_for('newCategory')}}">Add New Category</a></div>
 </div>
 </div>
 	</body>

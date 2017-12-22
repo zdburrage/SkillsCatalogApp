@@ -16,7 +16,17 @@ hr{
 	border: 2px solid black;
 	padding: 2%;
 }
+.big-link{
+	font-size: 20;
+	color: black;
+}
+.login{
 
+}
+
+.center{
+	text-align: center;
+}
 .pin-right{
 	float: right;
 }
