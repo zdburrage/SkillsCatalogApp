@@ -15,6 +15,7 @@ hr{
 .box {
 	border: 2px solid black;
 	padding: 2%;
+	border-radius: 25px;
 }
 .big-link{
 	font-size: 20;
@@ -29,4 +30,15 @@ hr{
 }
 .pin-right{
 	float: right;
+}
+
+.lbtn{
+	position: absolute;
+  top: 20%;
+  right: 2%;
+}
+.lobtn {
+position: absolute;
+  top: 20%;
+  right: 10%;
 }

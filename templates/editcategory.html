@@ -1,0 +1,63 @@
+<html>
+<head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+	</head>
+<body>
+      <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Job Skills Catalog</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li ><a href="{{ url_for('displayCategories') }}">Home</a></li>
+          <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+          <li><a href="{{ url_for('newItem')}}">Add Skill</a></li>
+          <li><a href="{{ url_for('newCategory')}}">Add Category</a></li>
+          </ul>
+          <a class="big-link login lobtn" href="/login">Login </a>
+          <a class="big-link lbtn" href="/logout"> Logout</a>
+      </div>
+    </nav>
+<div class="container">
+<h1>Edit Category</h1>
+
+<div class = 'pane'>
+<form action="{{ url_for('editCategory', category_id=category.id)}}" method = 'post'>
+
+<dl>
+	<dt>Name:</dt>
+		<dd><input type ='text' size='30' name='name' value= "{{category.name}}" required></dd>
+            <br>
+      <dt>Change Required Skills</dt>
+            {% for c in checked %}
+            <dd><input type ="checkbox" name="item_value" value={{c.id}} checked=checked> {{c.name}}</input></dd>
+            {% endfor %}
+            {% for u in unchecked %}
+             <dd><input type ="checkbox" name="item_value" value={{u.id}}> {{u.name}}</input></dd>
+            {% endfor %}
+
+</dl>
+
+
+<div class="row">
+<div class="col-md-1">
+  <a style="float: left;" href = "/">Cancel</a>
+</div>
+<div class="col-md-1">
+  <input type='submit'>
+</div>
+
+</div>
+
+</form>
+</div>
+</div>
+
+</body>
+
+
+
+
+</html>

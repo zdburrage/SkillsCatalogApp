@@ -7,6 +7,21 @@
 
 	
 	<body>
+				<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">Job Skills Catalog</a>
+		    </div>
+		    <ul class="nav navbar-nav">
+		      <li class="active"><a href="{{ url_for('displayCategories') }}">Home</a></li>
+		      <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+		      <li><a href="{{ url_for('newItem')}}">Add Skill</a></li>
+		      <li><a href="{{ url_for('newCategory')}}">Add Category</a></li>
+		       </ul>
+		    	<a class="big-link login lobtn" href="/login">Login </a>
+		      <a class="big-link lbtn" href="/logout"> Logout</a>
+		  </div>
+		</nav>
 	<div class = 'pane'>
 		<div class = 'header'>
 		<a class = 'main-title' href="{{ url_for('displayCategories') }}"><h1>Technical Job/Skills Catalog</h1></a>

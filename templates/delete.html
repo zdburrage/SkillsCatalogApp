@@ -5,16 +5,37 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 	</head>
 <body>
+			<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">Job Skills Catalog</a>
+		    </div>
+		    <ul class="nav navbar-nav">
+		      <li><a href="{{ url_for('displayCategories') }}">Home</a></li>
+		      <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+		      <li><a href="{{ url_for('newItem')}}">Add Skill</a></li>
+		      <li><a href="{{ url_for('newCategory')}}">Add Category</a></li>
+		      </ul>
+		    	<a class="big-link login lobtn" href="/login">Login </a>
+		      <a class="big-link lbtn" href="/logout"> Logout</a>
+		  </div>
+		</nav>
 	<div class = "container">
-<h1> Are you sure you want to delete {{itemToDelete.name}}? </h1>
-
-<form action="{{ url_for('deleteItem',category_id = itemToDelete.category_id, item_id=itemToDelete.id)}}" method = 'post'>
+		<div class="row">
+			<div class="col-md-12">
+				
+<h3> Are you sure you want to delete {{itemToDelete.name}}? This item will be removed from all categories it exists in. </h3>
+</div>
+</div>
+<form action="{{ url_for('deleteItem', item_id=itemToDelete.id)}}" method = 'post'>
 	<br>
 <div class="row">
-
-	<a style="float: left;" href = "{{url_for('displayItemsInCategory', category_id = itemToDelete.category_id)}}">Cancel</a>
-
+<div class="col-md-1">
+	<a style="float: left;" href = "{{url_for('allItems')}}">Cancel</a>
+</div>
+<div class="col-md-1">
 	<input type='submit', value = 'Delete'>
+</div>
 
 </div>
 

@@ -5,6 +5,21 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 	</head>
 <body>
+                  <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="/">Job Skills Catalog</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li ><a href="{{ url_for('displayCategories') }}">Home</a></li>
+                  <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+                  <li class="active"><a href="{{ url_for('newItem')}}">Add Skill</a></li>
+                  <li><a href="{{ url_for('newCategory')}}">Add Category</a></li>
+                   </ul>
+                  <a class="big-link login lobtn" href="/login">Login </a>
+                  <a class="big-link lbtn" href="/logout"> Logout</a>
+              </div>
+            </nav>
 <div class="container">
 <h1>Add Skill</h1>
 
@@ -16,14 +31,6 @@
 		<dd><input type ='text' size='30' name='name' required></dd>
             <dt>Description:</dt>
                         <dd><textarea name = 'description' rows='5' cols='40' required></textarea></dd>
-            <dt>Category:</dt>
-                        <dd>
-                              <select name='category_id'>
-                                    {% for c in categories %}
-                                    <option value='{{c.id}}'>{{c.name}}</option>
-                                    {% endfor %}
-                              </select>
-                        </dd>
 
 </dl>
 

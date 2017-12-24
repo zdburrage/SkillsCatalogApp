@@ -7,21 +7,26 @@
 
 	
 	<body>
-		<nav class="navbar navbar-default">
+				<nav class="navbar navbar-default">
 		  <div class="container-fluid">
 		    <div class="navbar-header">
 		      <a class="navbar-brand" href="/">Job Skills Catalog</a>
 		    </div>
 		    <ul class="nav navbar-nav">
-		      <li class="active"><a href="{{ url_for('displayCategories') }}">Home</a></li>
-		      <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+		      <li><a href="{{ url_for('displayCategories') }}">Home</a></li>
+		      <li class="active"><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
 		      <li><a href="{{ url_for('newItem')}}">Add Skill</a></li>
 		      <li><a href="{{ url_for('newCategory')}}">Add Category</a></li>
-		       </ul>
+		    </ul>
 		    	<a class="big-link login lobtn" href="/login">Login </a>
 		      <a class="big-link lbtn" href="/logout"> Logout</a>
 		  </div>
 		</nav>
+	<div class = 'pane'>
+		<div class = 'header'>
+		<a class = 'main-title' href="{{ url_for('displayCategories') }}"><h1 >Technical Job/Skills Catalog</h1></a>
+	</div>
+
 <div class = 'container'>
 		      {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -37,31 +42,22 @@
     {% endwith %}
 
 </div>
-
-	<div class = 'pane'>
-		<div class = 'header'>
-		<a class = 'main-title' href="{{ url_for('displayCategories') }}"><h1 >Technical Job/Skills Catalog</h1></a>
-	</div>
-
-<h2 class="main-title">Job Titles/Categories</h2>
+	<h2 class='main-title'>Master Skills List</h2>
 <div class = "container box">
+			{% for i in items %}
 <div class = 'row'>
-		{% for c in categories %}
-    <div class = 'nameAndPrice'>
-    	<div class="row">
-    	<div class='col-md-3'>
-			<a  href="{{ url_for('displayItemsInCategory', category_id = c.id)}}" class = 'name'><p>{{c.name}}</p>
-			</div>
-			<div class="col-md-1">
-			<a href="{{ url_for('editCategory', category_id=c.id)}}">Edit</a>
+    	<div class='col-md-4'>
+			<a  href="{{ url_for('displayIndividualItem', item_id = i.id)}}" class = 'name'><p>{{i.name}}</p>
 		</div>
-
+		<div class="col-md-1">
+			<a href="{{ url_for('editItem', item_id = i.id)}}">Edit</a>
 		</div>
-	</div>
-	{% endfor %}
-	</div>
+		<div class='col-md-1'>
+			<a href="{{ url_for('deleteItem', item_id = i.id )}}">Delete</a>
+		</div>
 	
 </div>
+{% endfor %}
 
 		
 		

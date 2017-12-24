@@ -5,6 +5,21 @@
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 	</head>
 <body>
+                  <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="/">Job Skills Catalog</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li ><a href="{{ url_for('displayCategories') }}">Home</a></li>
+                  <li><a href="{{ url_for('allItems')}}">View List of Skills</a></li>
+                  <li><a href="{{ url_for('newItem')}}">Add Skill</a></li>
+                  <li class="active"><a href="{{ url_for('newCategory')}}">Add Category</a></li>
+                   </ul>
+                  <a class="big-link login lobtn" href="/login">Login </a>
+                  <a class="big-link lbtn" href="/logout"> Logout</a>
+              </div>
+            </nav>
 <div class="container">
 <h1>Add Category</h1>
 
@@ -14,15 +29,22 @@
 <dl>
 	<dt>Name:</dt>
 		<dd><input type ='text' size='30' name='name' required></dd>
-      <dt>Add Items</dt>
+            <br>
+      <dt>Add Required Skills</dt>
             {% for i in items %}
-            <dd><input type ="checkbox" value={{i.id}}>{{i.name}}</input></dd>
+            <dd><input type ="checkbox" name="item_value" value={{i.id}}> {{i.name}}</input></dd>
             {% endfor %}
 
 </dl>
 
-
+<div class="row">
+      <div class="col-md-1">
+<a href="{{ url_for('displayCategories')}}">Cancel</a>
+</div>
+<div class="col-md-1">
 <input type='submit' value='Create'>
+</div>
+</div>
 
 </form>
 </div>
