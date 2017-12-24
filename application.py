@@ -312,7 +312,12 @@ def editItem(item_id):
 
 @app.route('/category/<int:category_id>/items/<int:item_id>/remove')
 def removeItemFromCategory(category_id,item_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     itemCategory = session.query(ItemCategory).filter(and_(ItemCategory.item_id==item_id, ItemCategory.category_id==category_id)).one()
+    if itemCategory.category.user_id != login_session['user_id']:
+        flash("You cannot edit this category because you did not create it.")
+        return redirect(url_for('displayItemsInCategory', category_id=category_id))
     session.delete(itemCategory)
     session.commit()
     return redirect(url_for('displayItemsInCategory', category_id=category_id))
