@@ -13,8 +13,11 @@ Modern web applications perform a variety of functions and provide amazing featu
 
 ## How to Run?
 ### PreRequisites
+
 Python ~2.7
+
 Vagrant
+
 VirtualBox
 
 ## Setup Project:
