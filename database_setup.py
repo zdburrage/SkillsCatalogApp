@@ -55,7 +55,7 @@ class Item(Base):
             'description': self.description,
             'id': self.id,
             'creator': self.user.name,
-            }
+        }
 
 
 class ItemCategory(Base):
@@ -76,7 +76,7 @@ class ItemCategory(Base):
             'description': self.item.description,
             'id': self.item.id,
             'creator': self.item.user.name,
-            }
+        }
 
 
 DBSession = sessionmaker(bind=engine)
@@ -103,52 +103,84 @@ CATEGORIES = [
     Category(name='Project Czar', user_id=1),
     Category(name='Systems Engi-nerd', user_id=1),
     Category(name='Script Flipper', user_id=1),
-    ]
+]
 
 ITEMS = [
     Item(name='Object Oriented Programming', description='OOP',
          user_id=1),
     Item(name='Relational Databases',
-         description='A relational database is a digital database based on therelational model of data, as proposed by E. F. Codd in 1970.A software system used to maintain relational databasesis a relational database management system (RDBMS). Virtually all relational databasesystems use SQL (Structured Query Language) for querying and maintaining the database.'
-         , user_id=1),
+         description="""A relational database is a digital database based
+                        on therelational model of data, as proposed by E. F.
+                        Codd in 1970.A software system used to maintain
+                        relational databasesis a relational database
+                        management system (RDBMS). Virtually all relational
+                        databasesystems use SQL (Structured Query Language)
+                        for querying and maintaining the database.""",
+         user_id=1),
     Item(name='JavaScript',
-         description='A front end dynamic language used to manipulate HTML and CSS as well as send API calls'
-         , user_id=1),
+         description="""A front end dynamic language used to
+                     manipulate HTML and CSS as well as send API calls""",
+         user_id=1),
     Item(name='HTML',
-         description='HyperText Markup Language, used for setting the structure of your web page'
-         , user_id=1),
+         description="""HyperText Markup Language, used for
+                        setting the structure of your web page""",
+         user_id=1),
     Item(name='SQL',
-         description='A very widely used database manipulation language for creating databases and editing them.'
-         , user_id=1),
-    Item(name='Oracle', description='A company that owns Java...somehow'
-         , user_id=1),
+         description="""A very widely used database manipulation
+                        language for creating databases and editing them.""",
+         user_id=1),
+    Item(name='Oracle', description='A company that owns Java...somehow',
+         user_id=1),
     Item(name='Kanban',
-         description='A form of agile methodology that involves moving user stories through stages from backlog to User accepptance'
-         , user_id=1),
+         description="""A form of agile methodology that involves
+                        moving user stories through stages from backlog
+                        to User accepptance""",
+         user_id=1),
     Item(name='Agile Methodology',
-         description='A methodology focused on delivering a product in a timely manner rather than getting it right the first time'
-         , user_id=1),
-    Item(name='Budgeting', description='Managing Mmney for projects',
+         description="""A methodology focused on delivering a product
+                        in a timely manner rather than getting it
+                        right the first time""",
+         user_id=1),
+    Item(name='Budgeting', description='Managing Money for projects',
          user_id=1),
     Item(name='Tough Conversations',
-         description="Being able to have conversations that aren't easy but need to be done"
-         , user_id=1),
+         description="""Being able to have conversations that
+                        aren't easy but need to be done""",
+         user_id=1),
     Item(name='Six Sigma',
-         description='a set of management techniques intended to improve business processes by greatly reducing the probability that an error or defect will occur.'
-         , user_id=1),
+         description="""a set of management techniques intended to
+                        improve business processes by greatly reducing
+                        the probability that an error or defect will occur.""",
+         user_id=1),
     Item(name='Operations Management',
-         description='Operations management refers to the administration of business practices to create the highest level of efficiency possible within an organization.'
-         , user_id=1),
+         description="""Operations management refers to the administration of
+                        business practices to create
+                        the highest level of efficiency
+                        possible within an organization.""",
+         user_id=1),
     Item(name='Shell Scripting',
-         description='Shell scripts allow us to program commands in chains and have the system execute them as a scripted event, just like batch files. They also allow for far more useful functions, such as command substitution.'
-         , user_id=1),
+         description="""Shell scripts allow us to program
+                        commands in chains and
+                        have the system execute them
+                        as a scripted event, just like
+                        batch files. They also allow for
+                        far more useful functions,
+                        such as command substitution.""",
+         user_id=1),
     Item(name='Bash Scripting',
-         description="A Bash script is a plain text file which contains a series of commands. These commands are a mixture of commands we would normally type ouselves on the command line (such as ls or cp for example) and commands we could type on the command line but generally wouldn't"
-         , user_id=1),
+         description="""A Bash script is a plain text file which contains a series of
+                        commands. These commands are a mixture
+                        of commands we would normally
+                        type ouselves on the command
+                        line (such as ls or cp for example) and
+                        commands we could type on the command
+                        line but generally wouldn't""",
+         user_id=1),
     Item(name='CSS',
-         description='Cascading Style Sheet, used to style the HTML you write'
-         , user_id=1),
-    ]
+         description="""Cascading Style Sheet, used to
+                        style the HTML you write""",
+         user_id=1),
+]
 
 ITEMCATEGORIES = [
     ItemCategory(category_id=1, item_id=1),
@@ -170,7 +202,7 @@ ITEMCATEGORIES = [
     ItemCategory(category_id=1, item_id=6),
     ItemCategory(category_id=2, item_id=10),
     ItemCategory(category_id=3, item_id=1),
-    ]
+]
 
 
 def addUsers():
@@ -199,5 +231,3 @@ if __name__ == '__main__':
     addCategories()
     addItems()
     addItemCategories()
-
-			

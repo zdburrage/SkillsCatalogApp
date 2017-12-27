@@ -10,7 +10,6 @@ from flask import session as login_session
 import random
 import string
 
-# IMPORTS FOR THIS STEP
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -19,9 +18,10 @@ import json
 from flask import make_response
 import requests
 app = Flask(__name__)
+app.secret_key = 'v0RNg7e4ft3VUR61D2MebuIq'
 
 CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web'
-        ]['client_id']
+                                                                ]['client_id']
 APPLICATION_NAME = 'Item Catalog App'
 
 engine = create_engine('sqlite:///itemcatalog.db')
@@ -57,8 +57,8 @@ def allCatalogItems():
 
 @app.route('/login')
 def showLogin():
-    state = ''.join(random.choice(string.ascii_uppercase
-                    + string.digits) for x in xrange(32))
+    state = ''.join(random.choice(string.ascii_uppercase +
+                                  string.digits) for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
@@ -70,7 +70,7 @@ def gconnect():
 
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'
-                                 ), 401)
+                                            ), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -83,13 +83,14 @@ def gconnect():
         # Upgrade the authorization code into a credentials object
 
         oauth_flow = flow_from_clientsecrets('client_secrets.json',
-                scope='')
+                                             scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
         response = \
-            make_response(json.dumps('Failed to upgrade the authorization code.'
-                          ), 401)
+            make_response(json.dumps("""Failed to upgrade the authorization
+                                     code."""
+                                     ), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -114,8 +115,9 @@ def gconnect():
     gplus_id = credentials.id_token['sub']
     if result['user_id'] != gplus_id:
         response = \
-            make_response(json.dumps("Token's user ID doesn't match given user ID."
-                          ), 401)
+            make_response(json.dumps("""Token's user ID
+                                     doesn't match given user ID."""
+                                     ), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -123,8 +125,9 @@ def gconnect():
 
     if result['issued_to'] != CLIENT_ID:
         response = \
-            make_response(json.dumps("Token's client ID does not match app's."
-                          ), 401)
+            make_response(json.dumps("""Token's client
+                                     ID does not match app's."""
+                                     ), 401)
         print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
@@ -133,8 +136,9 @@ def gconnect():
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
         response = \
-            make_response(json.dumps('Current user is already connected.'
-                          ), 200)
+            make_response(json.dumps("""Current user
+                                     is already connected."""
+                                     ), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -160,18 +164,30 @@ def gconnect():
     login_session['user_id'] = user_id
 
     output = \
-        '  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"'
+        '  <link rel="stylesheet" '
     output += \
-        'integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">'
+        'href="https://maxcdn.bootstrapcdn.com'
     output += \
-        '<link rel=stylesheet type=text/css href={{ url_for("static", filename="styles.css") }}">'
+        '/bootstrap/3.3.7/css/bootstrap.min.css"'
+    output += \
+        'integrity="sha384-BVYiiSIFeK1dGmJRAkycu'
+    output += \
+        'HAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdE'
+    output += \
+        'jh4u" crossorigin="anonymous">'
+    output += \
+        '<link rel=stylesheet type=text/css'
+    output += \
+        ' href={{ url_for("static", filename="styles.css") }}">'
     output += '<h1>Welcome, '
     output += login_session['username']
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
     output += \
-        ' " style = "width: 100px; height: 100px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+        ' " style = "width: 100px; height: 100px;border-radius:'
+    output += \
+        ' 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash('You are now logged in as %s' % login_session['username'])
     return output
 
@@ -202,14 +218,14 @@ def gdisconnect():
         del login_session['email']
         del login_session['picture']
         response = make_response(json.dumps('Successfully disconnected.'
-                                 ), 200)
+                                            ), 200)
         response.headers['Content-Type'] = 'application/json'
         flash('You are now logged out')
         return redirect('/')
     else:
         response = \
-            make_response(json.dumps('Failed to revoke token for given user.'
-                          , 400))
+            make_response(json.dumps(
+                'Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         flash('Failed to revoke token for given user.')
         return redirect('/')
@@ -239,7 +255,7 @@ def newCategory():
                 session.query(Category).filter_by(name=name).first()
             for item in request.form.getlist('item_value'):
                 newItemCategory = ItemCategory(category_id=category.id,
-                        item_id=item)
+                                               item_id=item)
                 session.add(newItemCategory)
                 session.commit()
             return redirect('/')
@@ -251,7 +267,7 @@ def newCategory():
 
 
 @app.route('/categories/<int:category_id>/edit', methods=['GET', 'POST'
-           ])
+                                                          ])
 def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -262,7 +278,8 @@ def editCategory(category_id):
               )
         return redirect('/')
     itemCategoryIds = \
-        session.query(ItemCategory.item_id).filter_by(category_id=category_id).all()
+        session.query(ItemCategory.item_id).filter_by(
+            category_id=category_id).all()
     l = []
     for i in itemCategoryIds:
         l.append(i[0])
@@ -286,37 +303,39 @@ def editCategory(category_id):
                 if i.id in l and i.id not in intList:
                     icToDelete = \
                         session.query(ItemCategory).filter_by(category_id=categoryToEdit.id,
-                            item_id=i.id).first()
+                                                              item_id=i.id).first()
                     session.delete(icToDelete)
                     session.commit()
                 currentSkill = \
                     session.query(ItemCategory).filter_by(category_id=categoryToEdit.id,
-                        item_id=i.id).first()
+                                                          item_id=i.id).first()
                 if currentSkill is None and int(i.id) in intList:
                     newItemCategory = \
                         ItemCategory(category_id=categoryToEdit.id,
-                            item_id=i.id)
+                                     item_id=i.id)
                     session.add(newItemCategory)
                     session.commit()
 
         session.add(categoryToEdit)
         session.commit()
         return redirect(url_for('displayItemsInCategory',
-                        category_id=categoryToEdit.id))
+                                category_id=categoryToEdit.id))
     else:
         return render_template('editcategory.html',
                                category=categoryToEdit,
                                checked=checked, unchecked=unchecked)
+
 
 @app.route('/category/<int:category_id>/delete',  methods=['GET', 'POST'])
 def deleteCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
     categoryToDelete = session.query(Category).filter_by(id=category_id).one()
-    itemCategoriesToDelete = session.query(ItemCategory).filter_by(category_id=category_id).all()
+    itemCategoriesToDelete = session.query(
+        ItemCategory).filter_by(category_id=category_id).all()
     if categoryToDelete.user_id != login_session['user_id']:
         flash('You cannot delete this category because you did not create it.'
-                  )
+              )
         return redirect('/')
     if request.method == 'POST':
         session.delete(categoryToDelete)
@@ -325,7 +344,9 @@ def deleteCategory(category_id):
         session.commit()
         return redirect('/')
     else:
-        return render_template('deletecategory.html', category=categoryToDelete)
+        return render_template('deletecategory.html',
+                               category=categoryToDelete)
+
 
 @app.route('/items/all')
 def allItems():
@@ -391,17 +412,19 @@ def removeItemFromCategory(category_id, item_id):
     if 'username' not in login_session:
         return redirect('/login')
     itemCategory = \
-        session.query(ItemCategory).filter(and_(ItemCategory.item_id
-            == item_id, ItemCategory.category_id == category_id)).one()
+        session.query(ItemCategory).filter(and_(ItemCategory.item_id ==
+                                                item_id,
+                                                ItemCategory.category_id ==
+                                                category_id)).one()
     if itemCategory.category.user_id != login_session['user_id']:
         flash('You cannot edit this category because you did not create it.'
               )
         return redirect(url_for('displayItemsInCategory',
-                        category_id=category_id))
+                                category_id=category_id))
     session.delete(itemCategory)
     session.commit()
     return redirect(url_for('displayItemsInCategory',
-                    category_id=category_id))
+                            category_id=category_id))
 
 
 @app.route('/items/<int:item_id>/delete', methods=['GET', 'POST'])
@@ -440,7 +463,7 @@ def createUser(login_session):
     session.add(newUser)
     session.commit()
     user = session.query(User).filter_by(email=login_session['email'
-            ]).one()
+                                                             ]).one()
     return user.id
 
 
@@ -453,9 +476,6 @@ def getUserID(email):
 
 
 if __name__ == '__main__':
-    app.secret_key = 'v0RNg7e4ft3VUR61D2MebuIq'
     app.debug = True
     logged_in_user = None
     app.run(host='0.0.0.0', port=5000)
-
-            
