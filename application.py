@@ -268,6 +268,8 @@ def newCategory():
 
 @app.route('/categories/<int:category_id>/edit', methods=['GET', 'POST'
                                                           ])
+# Compares current items in category, and removes/adds items
+# that the use checked/unchecked when editing
 def editCategory(category_id):
     if 'username' not in login_session:
         return redirect('/login')
@@ -297,18 +299,24 @@ def editCategory(category_id):
             categoryToEdit.name = request.form['name']
         if request.form.getlist('item_value'):
             intList = []
+            # gets list of checked items
             for x in request.form.getlist('item_value'):
                 intList.append(int(x))
+            # deletes items that were checked before,
+            # but unchecked in the new edit
             for i in items:
                 if i.id in l and i.id not in intList:
                     icToDelete = \
-                        session.query(ItemCategory).filter_by(category_id=categoryToEdit.id,
-                                                              item_id=i.id).first()
+                        session.query(ItemCategory).filter_by(
+                                   category_id=categoryToEdit.id,
+                                   item_id=i.id).first()
                     session.delete(icToDelete)
                     session.commit()
                 currentSkill = \
-                    session.query(ItemCategory).filter_by(category_id=categoryToEdit.id,
-                                                          item_id=i.id).first()
+                    session.query(ItemCategory).filter_by(
+                        category_id=categoryToEdit.id,
+                        item_id=i.id).first()
+                # adds to item list if a new item is checked during edit
                 if currentSkill is None and int(i.id) in intList:
                     newItemCategory = \
                         ItemCategory(category_id=categoryToEdit.id,
@@ -324,6 +332,8 @@ def editCategory(category_id):
         return render_template('editcategory.html',
                                category=categoryToEdit,
                                checked=checked, unchecked=unchecked)
+
+# Deletes all itemcategories associated with the category being deleted
 
 
 @app.route('/category/<int:category_id>/delete',  methods=['GET', 'POST'])
@@ -405,6 +415,9 @@ def editItem(item_id):
         return redirect(url_for('allItems'))
     else:
         return render_template('edititem.html', editedItem=editedItem)
+
+# Deletes itemcategory association which removes a certain item from a category
+# but does not delete the item
 
 
 @app.route('/category/<int:category_id>/items/<int:item_id>/remove')
